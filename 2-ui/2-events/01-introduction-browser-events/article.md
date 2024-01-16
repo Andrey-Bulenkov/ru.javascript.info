@@ -216,7 +216,7 @@ input.onclick = function() { alert(2); } // заменит предыдущий 
 Синтаксис добавления обработчика:
 
 ```js
-element.addEventListener(event, handler[, options]);
+element.addEventListener(event, handler, [options]);
 ```
 
 `event`
@@ -235,7 +235,7 @@ element.addEventListener(event, handler[, options]);
 Для удаления обработчика следует использовать `removeEventListener`:
 
 ```js
-element.removeEventListener(event, handler[, options]);
+element.removeEventListener(event, handler, [options]);
 ```
 
 ````warn header="Удаление требует именно ту же функцию"
@@ -414,7 +414,7 @@ document.addEventListener("DOMContentLoaded", function() {
     handleEvent(event) {
       // mousedown -> onMousedown
       let method = 'on' + event.type[0].toUpperCase() + event.type.slice(1);
-      this[method](event);
+      this[method]();
     }
 
     onMousedown() {
@@ -446,7 +446,7 @@ HTML-атрибуты используются редко потому, что J
 
 DOM-свойства вполне можно использовать, но мы не можем назначить больше одного обработчика на один тип события. Во многих случаях с этим ограничением можно мириться.
 
-Последний способ самый гибкий, однако нужно писать больше всего кода. Есть несколько типов событий, которые работают только через него, к примеру `transitionend` и `DOMContentLoaded`. Также `addEventListener` поддерживает объекты в качестве обработчиков событий. В этом случае вызывается метод объекта `handleEvent`.
+Последний способ самый гибкий, однако нужно писать больше всего кода. Есть несколько типов событий, которые работают только через него, например, `DOMContentLoaded`. Также `addEventListener` поддерживает объекты в качестве обработчиков событий. В этом случае вызывается метод объекта `handleEvent`.
 
 Не важно, как вы назначаете обработчик -- он получает объект события первым аргументом. Этот объект содержит подробности о том, что произошло.
 

@@ -36,7 +36,7 @@
 ```online
 Кликните на кнопку, чтобы увидеть её координаты относительно окна:
 
-<p><input id="brTest" type="button" value="Показать результат вызова button.getBoundingClientRect() для этой кнопки" onclick='showRect(this)'/></p>
+<p><input id="brTest" type="button" style="max-width: 90vw;" value="Показать результат вызова button.getBoundingClientRect() для этой кнопки" onclick='showRect(this)'/></p>
 
 <script>
 function showRect(elem) {
@@ -147,7 +147,7 @@ elem.style.background = ''; // Ошибка!
 
 Чаще всего нам нужны координаты для позиционирования чего-либо.
 
-Чтобы показать что-то около нужного элемента, мы можем вызвать `getBoundingClientRect`, чтобы получить его координаты элемента, а затем использовать CSS-свойство `position` вместе с `left/top` (или `right/bottom`).
+Чтобы показать что-то около нужного элемента, мы можем вызвать `getBoundingClientRect`, чтобы получить его координаты, а затем использовать CSS-свойство `position` вместе с `left/top` (или `right/bottom`).
 
 Например, функция `createMessageUnder(elem, html)` ниже показывает сообщение под элементом `elem`:
 

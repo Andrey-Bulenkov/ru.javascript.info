@@ -109,7 +109,7 @@ alert(typeof User); // function
 alert(User === User.prototype.constructor); // true
 
 // Методы находятся в User.prototype, например:
-alert(User.prototype.sayHi); // alert(this.name);
+alert(User.prototype.sayHi); // sayHi() { alert(this.name); }
 
 // в прототипе ровно 2 метода
 alert(Object.getOwnPropertyNames(User.prototype)); // constructor, sayHi
@@ -165,7 +165,7 @@ user.sayHi();
     ```
 
 2. Методы класса являются неперечислимыми.
-    Определение класса устанавливает флаг `enumerable` в` false` для всех методов в `"prototype"`.
+    Определение класса устанавливает флаг `enumerable` в `false` для всех методов в `"prototype"`.
 
     И это хорошо, так как если мы проходимся циклом `for..in` по объекту, то обычно мы не хотим при этом получать методы класса.
 

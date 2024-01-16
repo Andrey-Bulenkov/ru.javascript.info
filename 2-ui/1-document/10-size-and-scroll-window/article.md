@@ -75,19 +75,25 @@ alert('Текущая прокрутка слева: ' + window.pageXOffset);
 
 Эти свойства доступны только для чтения.
 
+```smart header="В качестве свойств объекта `window` также доступны `scrollX` и `scrollY`"
+По историческим причинам существует два аналога `window.pageXOffset` и `window.pageYOffset`:
+- `window.pageXOffset` -- то же самое, что и `window.scrollX`.
+- `window.pageYOffset` -- то же самое, что и `window.scrollY`.
+```
+
 ## Прокрутка: scrollTo, scrollBy, scrollIntoView [#window-scroll]
 
 ```warn
 Для прокрутки страницы из JavaScript её DOM должен быть полностью построен.
 
-Например, если мы попытаемся прокрутить страницу из скрипта в `<head>`, это не сработает.
+Например, если мы попытаемся прокрутить страницу из скрипта, подключенного в `<head>`, это не сработает.
 ```
 
 Обычные элементы можно прокручивать, изменяя `scrollTop/scrollLeft`.
 
 Мы можем сделать то же самое для страницы в целом, используя  `document.documentElement.scrollTop/Left` (кроме основанных на старом WebKit (Safari), где, как сказано выше, `document.body.scrollTop/Left`).
 
-Есть и другие способы, в которых подобных несовместимостей нет: специальные методы `window.scrollBy(x,y)` и `window.scrollTo(pageX,pageY)`.
+Есть и другие способы, в которых подобных несовместимостей нет: специальные методы [window.scrollBy(x,y)](https://developer.mozilla.org/ru/docs/Web/API/Window/scrollBy) и [window.scrollTo(pageX,pageY)](https://developer.mozilla.org/ru/docs/Web/API/Window/scrollTo).
 
 - Метод `scrollBy(x,y)` прокручивает страницу *относительно её текущего положения*. Например, `scrollBy(0,10)` прокручивает страницу на `10px` вниз.
 
@@ -103,7 +109,36 @@ alert('Текущая прокрутка слева: ' + window.pageXOffset);
     <button onclick="window.scrollTo(0,0)">window.scrollTo(0,0)</button>
     ```
 
-Эти методы одинаково работают для всех браузеров.
+В обоих методах вместо координат также может использоваться объект `options`, как аргумент:
+
+```js
+window.scrollTo(options);
+window.scrollBy(options);
+```
+
+`options` поддерживает три свойства:
+
+```js
+window.scrollTo({
+  top: 100,
+  left: 0,
+  behavior: "smooth"
+});
+```
+
+- `top` -- то же самое, что `y`/`pageY`
+- `left` -- то же самое, что `x`/`pageX`
+- `behavior` -- определяет, каким образом будет прокручиваться страница:
+
+  - `"smooth"` -- плавно (не поддерживается в IE и в старых версиях Safari)
+  - `"instant"` -- мгновенно
+  - `"auto"` -- определяется браузером (зависит от CSS-свойства [scroll-behavior](https://developer.mozilla.org/ru/docs/Web/CSS/scroll-behavior))
+
+```online
+Демонстрация плавной прокрутки страницы:
+
+<button onclick="window.scrollBy({ top: 500, left: 0, behavior: 'smooth' })">window.scrollBy({ top: 500, left: 0, behavior: 'smooth' })</button>
+```
 
 ## scrollIntoView
 
@@ -124,6 +159,26 @@ alert('Текущая прокрутка слева: ' + window.pageXOffset);
 
 <button onclick="this.scrollIntoView(false)">this.scrollIntoView(false)</button>
 ```
+
+Как и `scrollTo`/`scrollBy`, `scrollIntoView` также принимает объект `options` как аргумент (он немного отличается):
+
+```js
+this.scrollIntoView(options).
+```
+
+`options` поддерживает три свойства:
+
+```js
+this.scrollIntoView({
+  behavior: "smooth",
+  block: "end",
+  inline: "nearest" 
+});
+```
+
+- `behavior` -- анимация прокрутки (`smooth`, `instant`, `auto`)
+- `block` -- вертикальное выравнивание (`start`, `center`, `end`, `nearest`). Значение по умолчанию: `start`
+- `inline` -- горизонтальное выравнивание (`start`, `center`, `end`, `nearest`). Значение по умолчанию: `nearest`
 
 ## Запретить прокрутку
 
